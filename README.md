@@ -95,7 +95,7 @@ DATA_SOURCE=api pnpm dev
 - **Display:** http://localhost:5173/
 - **Control panel:** http://localhost:5173/control.html (or from your phone: `http://<your-ip>:5173/control.html`)
 
-Set your location in the control panel area is coming; for now set `centerLat` /
+Set your location in the control panel (coming soon); for now set `centerLat` /
 `centerLon` in [`shared/src/config.ts`](shared/src/config.ts) (defaults to SFO).
 
 ### With a radio (locally)
