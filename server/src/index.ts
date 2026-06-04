@@ -15,8 +15,10 @@ import { Hub } from "./hub.js";
 import { TleStore } from "./tle.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = resolve(__dirname, "../data");
-const WEB_DIST = resolve(__dirname, "../../web/dist");
+// When bundled inside Skylight.app, DATA_DIR and WEB_DIST come from env vars
+// set by the Swift shell. Fall back to repo-relative paths for dev.
+const DATA_DIR = process.env.DATA_DIR ?? resolve(__dirname, "../data");
+const WEB_DIST = process.env.WEB_DIST ?? resolve(__dirname, "../../web/dist");
 
 const PORT = Number(process.env.PORT ?? 3000);
 const HOST = process.env.HOST ?? "0.0.0.0";

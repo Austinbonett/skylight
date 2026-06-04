@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import ServiceManagement
 
 /// Owns the NSStatusItem (menu bar icon) and the two NSWindows.
 final class MenuBarController: NSObject {
@@ -27,6 +28,14 @@ final class MenuBarController: NSObject {
             .target = self
         menu.addItem(withTitle: "Control Panel", action: #selector(openControl), keyEquivalent: "c")
             .target = self
+        menu.addItem(.separator())
+
+        // Launch at login toggle
+        let loginItem = NSMenuItem(title: "Launch at Login", action: #selector(toggleLaunchAtLogin), keyEquivalent: "")
+        loginItem.target = self
+        loginItem.state = ServerProcess.launchAtLoginEnabled ? .on : .off
+        menu.addItem(loginItem)
+
         menu.addItem(.separator())
         menu.addItem(withTitle: "Quit Skylight", action: #selector(quit), keyEquivalent: "q")
             .target = self
@@ -89,6 +98,14 @@ final class MenuBarController: NSObject {
         ) { [weak self] _ in self?.controlWindow = nil }
 
         controlWindow = w
+    }
+
+    // MARK: - Launch at login
+
+    @objc private func toggleLaunchAtLogin(_ sender: NSMenuItem) {
+        let enable = sender.state == .off
+        ServerProcess.setLaunchAtLogin(enable)
+        sender.state = enable ? .on : .off
     }
 
     // MARK: - Quit
